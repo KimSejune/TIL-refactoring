@@ -11,11 +11,25 @@ const dummyData = {
     { zone: "서아프리카", profit: 7 },
   ],
 };
-it("투자 등급을 조회한다.", () => {
-  // given
-  const { voyage, history } = _.cloneDeep(dummyData);
-  // when
-  const myRating = rating(voyage, history);
-  // then
-  assert.equal(myRating, "B");
+
+describe("투자 등급을 조회한다.", () => {
+  it("voyage zone이 중국이 아닌 경우 투자 등급을 조회한다.", () => {
+    // given
+    const { voyage, history } = _.cloneDeep(dummyData);
+    // when
+    const myRating = rating(voyage, history);
+    // then
+    assert.equal(myRating, "B");
+  });
+
+  it("voyage zone이 중국인 경우 투자 등급을 조회한다.", () => {
+    // given
+    const voyage = { zone: "중국", length: 10 };
+    const { history } = _.cloneDeep(dummyData);
+
+    // when
+    const myRating = rating(voyage, history);
+    // then
+    assert.equal(myRating, "A");
+  });
 });
